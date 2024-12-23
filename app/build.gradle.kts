@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation("androidx.recyclerview:recyclerview:1.0.0")
     implementation("androidx.lifecycle:lifecycle-extensions:2.0.0")
+    implementation ("androidx.core:corektx:1.0.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
