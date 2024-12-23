@@ -7,10 +7,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
@@ -24,14 +28,15 @@ private const val TAG = "PhotoGalleryFragment"
 
 class PhotoGalleryFragment : Fragment() {
 
-    private lateinit var photoGalleryViewModel : PhotoGalleryViewModel
-    private lateinit var photoRecyclerView : RecyclerView
-    private lateinit var thumbnailDownloader : ThumbnailDownloader<PhotoHolder>
+    private lateinit var photoGalleryViewModel: PhotoGalleryViewModel
+    private lateinit var photoRecyclerView: RecyclerView
+    private lateinit var thumbnailDownloader: ThumbnailDownloader<PhotoHolder>
 
-    override fun onCreate(savedInstanceState : Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         retainInstance = true
+        setHasOptionsMenu(true)
 
         val responseHandler = Handler()
         thumbnailDownloader = ThumbnailDownloader(responseHandler) { photoHolder, bitmap ->
@@ -71,18 +76,42 @@ class PhotoGalleryFragment : Fragment() {
         thumbnailDownloader.clearQueue()
         viewLifecycleOwner.lifecycle.removeObserver(thumbnailDownloader.viewLifecycleObserver)
     }
+
     override fun onDestroy() {
         super.onDestroy()
         lifecycle.removeObserver(thumbnailDownloader.fragmentLifecycleObserver)
     }
 
 
-    private class PhotoHolder(private val itemImageView: ImageView):
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_photo_gallery, menu)
+
+        val searchItem: MenuItem = menu.findItem(R.id.menu_item_search)
+        val searchView = searchItem.actionView as SearchView
+        searchView.apply {
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(queryText: String): Boolean {
+                    Log.d(TAG, "QueryTextSubmit: $queryText")
+                    photoGalleryViewModel.fetchPhotos(queryText)
+                    return true
+                }
+
+                override fun onQueryTextChange(queryText: String): Boolean {
+                    Log.d(TAG, "QueryTextChange: $queryText")
+                    return false
+                }
+            })
+        }
+    }
+
+    private class PhotoHolder(private val itemImageView: ImageView) :
         RecyclerView.ViewHolder(itemImageView) {
         val bindDrawable: (Drawable) -> Unit = itemImageView::setImageDrawable
     }
 
-    private inner class PhotoAdapter(private val galleryItems: List<GalleryItem>) : RecyclerView.Adapter<PhotoHolder>() {
+    private inner class PhotoAdapter(private val galleryItems: List<GalleryItem>) :
+        RecyclerView.Adapter<PhotoHolder>() {
         override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int
@@ -94,8 +123,9 @@ class PhotoGalleryFragment : Fragment() {
             ) as ImageView
             return PhotoHolder(view)
         }
+
         override fun getItemCount(): Int = galleryItems.size
-        override fun onBindViewHolder(holder : PhotoHolder, position: Int) {
+        override fun onBindViewHolder(holder: PhotoHolder, position: Int) {
             val galleryItem = galleryItems[position]
             val placeholder: Drawable = ContextCompat.getDrawable(
                 requireContext(),
@@ -108,6 +138,7 @@ class PhotoGalleryFragment : Fragment() {
 
 
     }
+
     companion object {
         fun newInstance() = PhotoGalleryFragment()
     }
