@@ -28,11 +28,11 @@ private const val TAG = "PhotoGalleryFragment"
 
 class PhotoGalleryFragment : Fragment() {
 
-    private lateinit var photoGalleryViewModel: PhotoGalleryViewModel
-    private lateinit var photoRecyclerView: RecyclerView
-    private lateinit var thumbnailDownloader: ThumbnailDownloader<PhotoHolder>
+    private lateinit var photoGalleryViewModel : PhotoGalleryViewModel
+    private lateinit var photoRecyclerView : RecyclerView
+    private lateinit var thumbnailDownloader : ThumbnailDownloader<PhotoHolder>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
 
         retainInstance = true
@@ -76,7 +76,6 @@ class PhotoGalleryFragment : Fragment() {
         thumbnailDownloader.clearQueue()
         viewLifecycleOwner.lifecycle.removeObserver(thumbnailDownloader.viewLifecycleObserver)
     }
-
     override fun onDestroy() {
         super.onDestroy()
         lifecycle.removeObserver(thumbnailDownloader.fragmentLifecycleObserver)
@@ -104,14 +103,12 @@ class PhotoGalleryFragment : Fragment() {
             })
         }
     }
-
-    private class PhotoHolder(private val itemImageView: ImageView) :
+    private class PhotoHolder(private val itemImageView: ImageView):
         RecyclerView.ViewHolder(itemImageView) {
         val bindDrawable: (Drawable) -> Unit = itemImageView::setImageDrawable
     }
 
-    private inner class PhotoAdapter(private val galleryItems: List<GalleryItem>) :
-        RecyclerView.Adapter<PhotoHolder>() {
+    private inner class PhotoAdapter(private val galleryItems: List<GalleryItem>) : RecyclerView.Adapter<PhotoHolder>() {
         override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int
@@ -123,9 +120,8 @@ class PhotoGalleryFragment : Fragment() {
             ) as ImageView
             return PhotoHolder(view)
         }
-
         override fun getItemCount(): Int = galleryItems.size
-        override fun onBindViewHolder(holder: PhotoHolder, position: Int) {
+        override fun onBindViewHolder(holder : PhotoHolder, position: Int) {
             val galleryItem = galleryItems[position]
             val placeholder: Drawable = ContextCompat.getDrawable(
                 requireContext(),
@@ -138,7 +134,6 @@ class PhotoGalleryFragment : Fragment() {
 
 
     }
-
     companion object {
         fun newInstance() = PhotoGalleryFragment()
     }
