@@ -68,7 +68,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.0.0")
     implementation("androidx.lifecycle:lifecycle-extensions:2.0.0")
     implementation("androidx.core:corektx:1.0.0")
-    implementation("android.arch.work:workruntime:1.0.1")
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
