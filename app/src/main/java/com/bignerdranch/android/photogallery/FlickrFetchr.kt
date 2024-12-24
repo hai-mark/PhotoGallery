@@ -10,6 +10,7 @@ import api.FlickrApi
 import api.FlickrResponse
 import api.PhotoInterceptor
 import api.PhotoResponse
+import com.bignerdranch.android.photogallery.GalleryItem
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Call
