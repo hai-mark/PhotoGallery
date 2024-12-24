@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    kotlin("kapt")
 }
 
 android {
@@ -51,6 +52,12 @@ android {
 
 dependencies {
 
+    implementation ("androidx.room:room-runtime:2.5.2") // Замените версию на актуальную
+    kapt("androidx.room:room-compiler:2.5.2")
+    implementation ("androidx.room:room-ktx:2.5.2")
+
+    // ViewModel
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1") // Укажите последнюю версию
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0") // Обновлено с 2.5.0
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0") // Обновлено с 2.5.0
@@ -68,7 +75,6 @@ dependencies {
     implementation("androidx.core:core-ktx:1.12.0") // Исправлено название и обновлено с 1.0.0
     implementation("androidx.work:work-runtime-ktx:2.8.1") // Оставлено без изменений
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-    // Compose (libs.* замените на конкретные версии, если они не определены в каталоге зависимостей)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
