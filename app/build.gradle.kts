@@ -51,10 +51,24 @@ android {
 
 dependencies {
 
-    implementation ("com.squareup.retrofit2:retrofit:2.5.0")
-    implementation("com.squareup.retrofit2:converter-scalars:2.5.0")
-    implementation ("com.google.code.gson:gson:2.8.5")
-    implementation ("com.squareup.retrofit2:converter-gson:2.4.0")
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0") // Обновлено с 2.5.0
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0") // Обновлено с 2.5.0
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0") // Обновлено с 2.4.0
+
+    // Gson
+    implementation("com.google.code.gson:gson:2.10.1") // Обновлено с 2.8.5
+
+    // AndroidX
+    implementation("androidx.appcompat:appcompat:1.6.1") // Оставлено без изменений
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4") // Оставлено без изменений
+    implementation("com.google.android.material:material:1.9.0") // Оставлено без изменений
+    implementation("androidx.recyclerview:recyclerview:1.3.1") // Обновлено с 1.0.0
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2") // Заменено на актуальную версию
+    implementation("androidx.core:core-ktx:1.12.0") // Исправлено название и обновлено с 1.0.0
+    implementation("androidx.work:work-runtime-ktx:2.8.1") // Оставлено без изменений
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    // Compose (libs.* замените на конкретные версии, если они не определены в каталоге зависимостей)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -65,10 +79,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation("androidx.recyclerview:recyclerview:1.0.0")
-    implementation("androidx.lifecycle:lifecycle-extensions:2.0.0")
-    implementation("androidx.core:corektx:1.0.0")
-    implementation("androidx.work:work-runtime-ktx:2.8.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
