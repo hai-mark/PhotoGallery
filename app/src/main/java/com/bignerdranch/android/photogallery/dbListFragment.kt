@@ -96,7 +96,7 @@ class dbListFragment : Fragment() {
 
         fun bind(galleryItem: GalleryItem) {
             this.galleryItem = galleryItem
-            idTextView.text = this.galleryItem.id
+            idTextView.text = this.galleryItem.id.toString()
             titleTextView.text = this.galleryItem.title
             urlTextView.text = this.galleryItem.url
         }

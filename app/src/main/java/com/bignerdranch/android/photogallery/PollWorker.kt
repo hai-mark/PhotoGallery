@@ -34,12 +34,12 @@ class PollWorker(val context: Context, workerParams: WorkerParameters): Worker(c
         }
 
         val resultId = items.first().id
-
-        if (resultId == lastResultId) {
+        if (resultId.toString() == lastResultId) {
             Log.i(TAG, "Got an old result: $resultId")
-        } else {
+
+        }else {
             Log.i(TAG, "Got a new result: $resultId")
-            QueryPreferences.setLastResultId(context, resultId)
+            QueryPreferences.setLastResultId(context, resultId.toString())
 
             val intent = PhotoGalleryActivity.newIntent(context)
             val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)

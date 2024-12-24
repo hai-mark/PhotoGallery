@@ -20,6 +20,7 @@ class PhotoGalleryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+        PhotoRepository.initialize(applicationContext)
         enableEdgeToEdge()
         setContentView(R.layout.activity_photo_gallery)
         val isFragmentContainerEmpty =

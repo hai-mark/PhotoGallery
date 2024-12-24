@@ -63,19 +63,21 @@ class FlickrFetchr {
                 response: Response<FlickrResponse>
             ) {
                 Log.d(TAG, "Response received")
-                val flickrResponse: FlickrResponse? = response.body()
-                val photoResponse: PhotoResponse? = flickrResponse?.photos
-                var galleryItems: List<GalleryItem> = photoResponse?.galleryItems ?: mutableListOf()
-                galleryItems = galleryItems.filterNot {
-                    it.url.isBlank()
-                }
+
+                // Получаем тело ответа
+                val flickrResponse = response.body()
+                val photoResponse = flickrResponse?.photos
+                val galleryItems = photoResponse?.galleryItems
+                    ?.filterNot { it.url.isNullOrBlank() } // Проверяем, чтобы URL был не пустым и не null
+                    ?: emptyList() // Если нет элементов, возвращаем пустой список
+
                 responseLiveData.value = galleryItems
             }
+
         })
 
         return responseLiveData
     }
-
     @WorkerThread
     fun fetchPhoto(url: String): Bitmap? {
         val response: Response<ResponseBody> = flickrApi.fetchUrlBytes(url).execute()
